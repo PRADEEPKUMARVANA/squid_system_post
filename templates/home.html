@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        
+        <div class="card shadow-lg border-0 rounded-lg">
+            <div class="card-body p-5 text-center">
+                
+                <div class="mb-4">
+                    <span style="font-size: 4rem;">🦑</span>
+                </div>
+                <h2 class="mb-3 fw-bold text-dark">SQUID Search</h2>
+                <p class="text-muted mb-4 fs-5">
+                    Example-Driven Query Intent Discovery
+                </p>
+
+                <div class="alert alert-light border mb-4 text-start">
+                    <small class="text-muted fw-bold text-uppercase">How to use:</small>
+                    <p class="mb-0 mt-1">
+                        Enter a list of examples (actors, directors, etc.) and SQUID will discover what they have in common.
+                    </p>
+                    <small class="text-muted fst-italic">Try: "Jim Carrey, Adam Sandler, Eddie Murphy"</small>
+                </div>
+
+                <form method="POST" action="{% url 'search' %}">
+                    {% csrf_token %}
+                    
+                    <div class="form-floating mb-3">
+                        <input type="text" 
+                               name="examples" 
+                               class="form-control form-control-lg" 
+                               id="exampleInput" 
+                               placeholder="e.g. Jim Carrey, Adam Sandler"
+                               required>
+                        <label for="exampleInput">Enter examples (comma-separated)</label>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg py-3 fw-bold" type="submit">
+                            Discover Intent 🔍
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+            
+            <div class="card-footer bg-light text-center py-3">
+                <a href="{% url 'dashboard' %}" class="text-decoration-none text-secondary">
+                    View System Dashboard &rarr;
+                </a>
+            </div>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger mt-4 shadow-sm d-flex align-items-center" role="alert">
+            <span class="fs-4 me-3">⚠️</span>
+            <div>
+                <strong>Oops!</strong> {{ error }}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

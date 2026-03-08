@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+
+        <div class="mb-4">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                &larr; Start New Search
+            </a>
+        </div>
+
+        <div class="card shadow-lg mb-5 border-0 result-card">
+            <div class="card-body p-5">
+                <h2 class="card-title text-success mb-3">
+                    <span class="fs-1">💡</span> Intent Discovered!
+                </h2>
+                
+                <p class="text-muted mb-4">
+                    Based on your examples: 
+                    {% for name in user_examples %}
+                        <span class="badge bg-secondary fs-6 mx-1">{{ name }}</span>
+                    {% endfor %}
+                </p>
+                
+                <div class="alert alert-success border-0 bg-success-subtle p-4 rounded-3">
+                    <h4 class="alert-heading fw-bold">Logic Found:</h4>
+                    <p class="lead mb-0 fst-italic">
+                        "{{ explanation }}"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow border-0">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h4 class="mb-0 text-primary">
+                    Found Entities <span class="badge bg-primary rounded-pill fs-6 align-middle ms-2">{{ results|length }}</span>
+                </h4>
+                <small class="text-muted">Top matches from the database fitting this pattern</small>
+            </div>
+            
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="ps-4">Actor Name</th>
+                                <th class="text-end pe-4">{{ filter_genre }} Movies Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in results %}
+                            <tr>
+                                <td class="ps-4 fw-medium">{{ row.person__name }}</td>
+                                <td class="text-end pe-4">
+                                    <span class="badge bg-light text-dark border">
+                                        {{ row.count }} movies
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center text-muted py-5">
+                                    No matching results found in the database.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
