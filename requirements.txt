@@ -139,7 +139,7 @@ optree==0.14.0
 orjson==3.11.3
 overrides==7.7.0
 packaging==24.1
-pandas==2.2.2
+pandas
 Paste==3.10.1
 PasteDeploy==3.1.0
 Persistence==5.1
